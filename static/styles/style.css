@@ -1,0 +1,108 @@
+
+/* grid */
+.item1 { grid-area: left; }
+.item2 { grid-area: center; }
+.item3 { grid-area: right; }
+.item4 { grid-area: bottom; }
+
+
+.container1 {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'left left center center right right'
+    'bottom bottom bottom bottom bottom bottom'
+    'bottom bottom bottom bottom bottom bottom'
+    'bottom bottom bottom bottom bottom bottom';
+  grid-gap: 10px;
+  padding: 30px;
+  margin-right: 40px;
+}
+
+.container1 > div {
+  background-color: white;
+  text-align:center;
+  padding: 20px 0;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.chart_div {
+  padding: 10px;
+}
+
+.chart-wrapper {
+  width: 430px;
+  height: 250px;
+  margin: 0 10px;
+  margin-top: 60px;
+}
+
+/* Team member List */
+
+.panel-info {
+  background: url(http://themesground.com/modern/demo1/HTML/img/intro-bg.png) repeat top left;
+  color: black;
+}
+
+.panel-widget {
+  overflow: hidden;
+  border: none;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.panel .panel-title {
+  color: #58666e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0px;
+}
+
+
+.basic-list {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/* Basic List */
+.basic-list {
+margin-bottom: 0;
+padding: 0;
+}
+.basic-list li {
+display: block;
+position: relative;
+padding: 6px 0;
+}
+.basic-list li:last-child {
+border-bottom: none;
+}
+.basic-list .right {
+position: absolute;
+right: 0;
+display: inline-block;
+padding: 3px 6px;
+font-weight: 400;
+}
+
+/* Image List */
+.image-list li {
+padding-left: 50px;
+}
+.image-list .img {
+width: 40px;
+height: 40px;
+position: absolute;
+left: 0;
+border-radius: 0px;
+}
+.image-list .desc {
+font-size: 10px;
+opacity: 0.8;
+display: block;
+}
