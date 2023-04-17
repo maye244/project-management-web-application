@@ -1,0 +1,64 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block teams %}
+{% load static %}
+
+	<!-- <h2>Teams</h2> -->
+	
+	
+	<!-- <div class="card form_distance" style="width: 25rem;">
+		
+		
+		 <img src="{% static '../static/img/02.jpg'%}" class="card-img-top" alt="projectprofile"> -->
+		
+		<!-- <div class="card-body">
+			{% for team in teams %}
+			<section class="projectBox">
+						<h4><a href="{% url 'todo_lists:team' team.id %}" class="project_name">Position:{{ team.position }}</a>	</h4>
+							<p class="card-text">Name: {{ team.name }}</p>
+							<p class="card-text">Emplyee ID: {{ team.employeeID }}</p>
+							<p class="card-text">email: {{ team.email }}</p>
+							
+							<p class="card-text">projects: {{ team.projects }}</p>
+
+			</section>
+			{% endfor %}
+		</div>
+
+	</div>	 --> 
+
+
+	<div class="container px-1 py-5 " id="hanging-icons">
+		<h2 class="pb-2 border-bottom" style="text-align: center;">Teams
+			<!-- <a href="{% url 'todo_lists:new_project'%}" class="btn btn-outline-warning btn btn-primary" style="float:right;color: white;">Add new project      <img src="{% static '../static/img/addd.png'%}" alt="addpic" width="25" height="25"></a> -->
+		</h2>
+		
+	
+		<div class="row g-4 py-5 row-cols-1 row-cols-lg-4" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+			{% for team in teams %}
+	
+				<div class="card card-cover overflow-hidden text-white bg-white rounded-5 shadow-lg" style="margin-left: 30px; height: 300px; padding: 20px;">
+					<p class="card-text h3" style="color: black;">Name: {{ team.name }}</p>
+					<h4><a href="{% url 'todo_lists:team' team.id %}" class="project_name h5">Current tasks</a>	</h4>
+					<p class="card-text h5" style="color: black;">Position:{{ team.position }}</p>
+					
+
+					<p class="card-text h5" style="color: black;">Emplyee ID: {{ team.employeeID }}</p>
+					<p class="card-text  h5" style="color: black;">email: {{ team.email }}</p>
+					
+					<p class="card-text h5" style="color: black;">projects: {{ team.projects }}</p>
+		
+					<br>
+
+	
+				</div> 
+			{% empty %}
+			<span>No team has been added yet.</span>	
+			{% endfor %}
+		  </div>
+	
+		</div>
+	  </div>
+	
+{% endblock %}

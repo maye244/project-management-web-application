@@ -1,0 +1,49 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block new-project %}
+<div class="card form_distance" style="width: 40rem; height: 800px; margin: 50px 30%;">
+
+<br>
+	<h2>Add a new project:</h2>
+	<br><br><br>
+	<!-- <div class="card col-lg-8 col-md-10"> -->
+		<form action="{% url 'todo_lists:new_project' %}" method="post" id="project-form">
+			{% csrf_token %}
+			<div  class="form-group">
+				{{ form.new_project }}
+				<div class="wrapper form-control form-control-sm" >
+					{{ form.member.errors }}
+					<label for="{{ form.member.id_for_label }}">Member</label>
+					{{ form.member }}
+				</div>
+				<br>
+				<div class="wrapper form-control form-control-sm">
+					{{ form.name.errors }}
+					<label for="{{ form.name.id_for_label }}">Name</label>
+					{{ form.name }}
+				</div>
+				<br>
+				<div class="wrapper form-control form-control-sm">
+					{{ form.due_date.errors }}
+					<label for="{{ form.due_date.id_for_label }}">Due Date</label>
+					{{ form.due_date }}
+				</div>
+				<br>
+				<div class="wrapper form-control form-control-sm col-lg-8">
+					{{ form.project_code.errors }}
+					<label for="{{ form.project_code.id_for_label }}">Project_code</label>
+					{{ form.project_code }}
+				</div>
+				<br>
+				<div class="wrapper form-control form-control-sm">
+					<label for="{{ form.details.id_for_label }}">Details</label>
+					{{ form.details.errors }}
+					{{ form.details }}
+				</div>
+			</div>
+			<button name="submit" class="btn btn-primary">Add project</button>
+		</form>
+	<!-- </div> -->
+</div>
+{% endblock %}

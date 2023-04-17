@@ -1,0 +1,61 @@
+{% load static from static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="P&NP loginpage">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{%static '../static/styles/pnpstyle.css'%}">
+  <link rel="stylesheet" href="{%static '../static/styles/login.css'%}">
+  <script type="text/javascript" src="{%static '../static/js/login.js'%}">
+  </script>
+
+  <title>Login Page</title>
+</head>
+<body>
+  <header>
+    <div class="header" >
+      <p>PNP logo</p>
+    </div>
+    <div class="right">
+
+      <div id="login" class="lefttag2">
+        <p><a href="http://127.0.0.1:8000/login/">Log in</a></p>
+      </div>
+      <div id="register" >
+        <p><a href="http://127.0.0.1:8000/register/">Register</a></p>
+      </div>
+
+    </div>
+  </header>
+
+    <div class="main">
+    <div id="logincenter">
+      <p>Log-in</p>
+    </div>
+  </div>
+ 
+  <div id="login_frame">
+    <div class="loginframebox">
+      <p>Please Log In </p>
+      <form action="{% url 'login' %}" method="post">
+        {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+        {% csrf_token %}
+        <p><input type="text" id="username" name="username" class="text_field" placeholder="email"></p>
+        <p><input type="password" id="password" name="password" class="text_field" placeholder="password"></p>
+
+        <div id="login_control">
+          <p><input type="submit" id="btn_login" value="Log in" > </p>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <footer>
+
+  </footer>
+</body>
+</html>

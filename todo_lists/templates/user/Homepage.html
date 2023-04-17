@@ -1,0 +1,40 @@
+{% load static from static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="P&NP homepage">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{%static '../static/styles/pnpstyle.css'%}">
+  <link rel="stylesheet" href="{%static '../static/styles/login.css'%}">
+  <script type="text/javascript" src="{%static '../static/js/login.js'%}"> 
+  </script>
+  <title>Home Page</title>
+</head>
+<body>
+  <header>
+    <div class="header" >
+      <p>PNP logo</p>
+    </div>
+    <div class="right">
+
+      <div id="login" >
+        <p>log-in</p>
+      </div>
+      <div id="register" >
+        <p>Register</p>
+      </div>
+
+    </div>
+  </header>
+  <div class="main">
+    <div id="logincenter">
+      <p><a href="http://127.0.0.1:8000/login/">Log-in</a></p>
+    </div>
+  </div>
+  <footer>
+
+  </footer>
+</body>
+</html>

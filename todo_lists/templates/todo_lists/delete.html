@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends "todo_lists/base.html" %}
+<!-- {% block title %}Delete Page{% endblock %} -->
+
+{% block delete %}
+{% load static %}
+<div class="delete_distance">
+<div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="border p-3 bg-white">
+            <h3>Delete This Task:</h3>
+            <hr>
+            <form action="{% url 'todo_lists:delete_todo' todo.id %}" method="post">
+                <div class="alert alert-danger">
+                    <h4>Are you sure, you want to delete "{{ todo.name }}"?</h4>
+                </div>
+                {% csrf_token %}
+                
+                
+                <input class="btn btn-danger btn-sm" type="submit" value="Confirm">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

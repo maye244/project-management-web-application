@@ -1,0 +1,176 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-main-function-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<!-- add list button -->
+{% block team %}
+
+	<div class="modal" id="todo_form">
+	  <div class="header">
+	    <div class="title">Add New List</div>
+	    <button id= "titleclosebtn" class="btn close-modal">&times;</button>
+	  </div>
+	  <div class="body">
+	    <input type="text" id="todo_input1" placeholder="Write a new task name" required/>
+	    <input type="text" id="todo_input2" placeholder="Write the task description"/>
+	    <input type="submit" value="Add" id="todo_submit" />
+	  </div>
+	</div>
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-to-do-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<!-- todo list -->
+{% load static %}
+   
+<section class="inline"  style="display: table; ">
+  <div class="toplist">
+    <div id="addDiv">
+      Going to do 
+    </div>       
+  </div>
+  
+  <div class="innerbox">
+    {% for todo in todos %}
+    <div class="inner"  style="display: table-row-group;">
+      <div class="row">              
+        <div >
+          <a href="{% url 'todo_lists:edit_todo' todo.id %}" style="float: right;">
+            <img src="{% static '../static/img/edit2.png'%}"  alt="editpic" width="12" height="15"></a>
+
+          <a href="{% url 'todo_lists:delete_todo' todo.id %}" style="float: right;">
+            <img src="{% static '../static/img/delete.png'%}"  alt="deletepic" width="12" height="15"></a>
+            
+          <p class="h3">Task Name:<span class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.name }}</span></p>    
+        </div>
+        <p class="h3">Project: <span class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.project }}</span></p>    
+        </div>
+        <p  class="h3">Details: <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.details }}</span>
+        </p>            
+        <p  class="h3">Due Date:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.due_date }}</span>
+        </p>
+      </div>
+
+    </div> 
+    {% empty %}
+    <li class="h4"> This member do not have a to-do task.</li>
+  {% endfor %} 
+  </div>            
+</section>
+      
+    <!-- <section class="inline"  style="display: table; ">
+        <div class="toplist">
+          <div id="addDiv">Going to do
+            
+          </div>       
+        </div>
+
+        <div class="innerbox">
+          {% for todo in todos %}
+          <div class="inner2">
+            <p>Task Name: {{ todo.name }}</p>
+            <p>Project: {{ todo.project }}</p>
+            <p>Description: {{ todo.details }}</p>
+            <div>
+              <p>Due:{{ todo.due_date }}</p>
+            </div>
+          </div>
+          {% empty %}
+            <li>/li>
+          {% endfor %} 
+        </div>
+
+      </section> -->
+      
+ <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-in-progress-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
+ <!-- <section class="inline"  style="display: table; ">
+  <div class="toplist">
+    <div id="addDiv">
+      In progress
+    </div>       
+  </div>
+  
+  <div class="innerbox">
+    {% for todo in todos %}
+    <div class="inner"  style="display: table-row-group;">
+      <div class="row">              
+        <div >
+          <a href="{% url 'todo_lists:edit_todo' todo.id %}" style="float: right;">
+            <img src="{% static '../static/img/edit2.png'%}"  alt="editpic" width="12" height="15"></a>
+
+          <a href="{% url 'todo_lists:delete_todo' todo.id %}" style="float: right;">
+            <img src="{% static '../static/img/delete.png'%}"  alt="deletepic" width="12" height="15"></a>
+            
+          <p class="h3">Task Name:<span class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.name }}</span></p>    
+        </div>
+        <p class="h3">Project: <span class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.project }}</span></p>    
+        </div>
+        <p  class="h3">Details: <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.details }}</span>
+        </p>            
+        <p  class="h3">Due Date:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.due_date }}</span>
+        </p>
+      </div>
+
+    </div> 
+    {% empty %}
+    <li> This member do not have a to-do task.</li>
+  {% endfor %} 
+  </div>            
+</section> -->
+      <section class="inline">
+        <div class="toplist">
+          <div>In progress</div>
+        </div>
+
+        <div class="innerbox">
+          {% for progress in progresses %}
+          <div  class="inner"  style="display: table-row-group;">
+            <p  class="h3">Task Name:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.name }}</span>
+        </p>
+            <p  class="h3">Project:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.project }}</span>
+            </p>
+            <p  class="h3">Details:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.details }}</span>
+            </p>
+            <div>
+              
+              <p  class="h3">Due Date:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.due_date }}</span>
+              </p>
+            </div>
+            
+          </div>
+          {% empty %}
+            <li class="h4">This member do not have a task in progress.</li>
+          {% endfor %}
+        </div>
+
+      </section>
+    
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-done-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    
+      <section class="inline">
+        <div class="toplist">
+          <div>Done</div>
+        </div>
+        <div class="innerbox">
+          {% for done in dones %}
+          <div  class="inner"  style="display: table-row-group;">
+            <p  class="h3">Task Name  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.name }}</span>
+            </p>
+              <p  class="h3">Project:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.project }}</span>
+              </p>
+                <p  class="h3">Details:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.details }}</span>
+                </p>
+            <div>
+              
+              <p  class="h3">Due Date:  <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.due_date }}</span>
+              </p>
+            </div>
+          </div>
+          {% empty %}
+            <li class="h4">This member do not have not done a task yet.</li>
+          {% endfor %}
+          
+        </div>
+      </section>
+    
+  	
+ <footer>
+ </footer>
+ <div id="overlay"></div>
+ {% endblock %}

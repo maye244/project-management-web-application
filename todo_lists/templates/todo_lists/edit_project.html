@@ -1,0 +1,18 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block edit_project %}
+<div class="card form_distance" style="width: 40rem; height: 800px; margin: 50px 30%;">
+	<div class="card-body">
+	<p class="card-title"><a href="{% url 'todo_lists:project' project.id %}" class="resources_link">{{ project.name }}</a></p>
+	
+	<p class="card-title">Edit a project:</p>
+
+	<form action="{% url 'todo_lists:edit_project' project.id %}" method="post" class="form-group">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button name="submit" class="btn btn-primary btn-sm">Save changes</button>
+	</form>
+	</div>
+</div>	
+{% endblock %}

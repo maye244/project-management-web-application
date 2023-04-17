@@ -1,0 +1,53 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block projects %}
+{% load static %}
+<div class="container px-4 py-5 " id="hanging-icons">
+    <h2 class="pb-2 border-bottom" style="text-align: center;">Projects
+		<a href="{% url 'todo_lists:new_project'%}" class="btn btn-outline-warning btn btn-primary" style="float:right;color: white;">Add new project      <img src="{% static '../static/img/addd.png'%}" alt="addpic" width="25" height="25"></a>
+	</h2>
+	<div >
+		<p>{{request.session.error}}</p >
+	</div>
+	
+
+    <div class="row g-4 py-5 row-cols-2 row-cols-lg-4">
+		{% for project in projects %}
+		<!-- <div class="col d-flex align-items-start" >	 -->
+
+			<div class="card card-cover overflow-hidden text-white bg-white rounded-5 shadow-lg" style="margin-left: 30px; height: 600px; padding: 20px;">
+			
+				<!-- <p class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"> -->
+				<h2><a href="{% url 'todo_lists:project' project.id %}" class="project_name">{{ project.name }}</a>
+					<a href="{% url 'todo_lists:delete_project' project.id %}">
+						<img src="{% static '../static/img/delete_project.png'%}" alt="deletepic" width="20" height="25" style="float: right;"></a>
+					<a href="{% url 'todo_lists:edit_project' project.id %}">
+						<img src="{% static '../static/img/edit.png'%}" alt="editpic" width="25" height="25" style="float: right;"></a>
+	
+				</h2>
+				<!-- <a href="{% url 'todo_lists:project' project.id %}" class="card-title project_name">Enter Project:{{ project.name }}</a>		 -->
+				<br>
+				<hr style="color: grey;">
+
+				<span class="card-text h3 text-black"><strong>Project Code: </strong></span><br>
+				<span class="card-text h3 text-black">{{ project.project_code }}</span><br>
+				<!-- <span class="card-text"><strong class="project_item">ProjectName: </strong> {{ project.name }}</span><br> -->
+				<span class="card-text h3 text-black"><strong>Due date: </strong> </span><br>
+				<span class="card-text h3 text-black">{{ project.due_date|date:"d,m,Y" }}</span><br>
+				<span class="card-text h3 text-black"><strong>Description: </strong> </span><br>
+				<span  class="card-text h3 text-black">{{ project.details }}</span><br>
+				<span class="card-text h3 text-black"><strong>Team Member: </strong> </span><br>
+				<span  class="card-text h3 text-black">{{ project.member }}</span>
+
+			</div> 
+		<!-- </div> -->
+		{% empty %}
+		<h3>No project has been added yet.</h3>	
+		{% endfor %}
+
+
+	</div>
+  </div>
+
+{% endblock %}

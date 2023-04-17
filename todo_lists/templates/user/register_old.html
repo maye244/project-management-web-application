@@ -1,0 +1,77 @@
+{% load static from static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="P&NP loginpage">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{%static '../static/styles/pnpstyle.css'%}">
+  <link rel="stylesheet" href="{%static '../static/styles/register.css'%}">
+  <script src= "{%static '../static/js/validate.js'%}"></script>
+  <title>Login Page</title>
+</head>
+
+<body>
+  <!--                      header                    -->
+  <header>
+    <div class="header" >
+      <p>PNP logo</p>
+    </div>
+    <div class="right">
+      <div id="login" >
+        <p><a href="http://127.0.0.1:8000/login/">Log in</a></p>
+      </div>
+      <div id="register" >
+        <p><a href="http://127.0.0.1:8000/register/">Register</a></p>
+      </div>
+    </div>
+  </header>
+<!--
+    <div class="main">
+    <div id="logincenter">
+      <p>Log-in</p>
+    </div>
+  </div>
+  -->
+  <!--                        register container                   -->
+  <div id="register_frame">
+    <div class="registerbox">
+      <!--                          form                       -->
+
+
+      <form id="regform" method="post" action="{% url 'user_register' %}" novalidate="novalidate">
+        {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+        {% csrf_token %}
+
+        <label for="fname">First Name</label>
+        <p><input name="firstname" type="text" id="fname" class="text_field"></p>
+        <label for="lname">Last Name</label>
+        <p><input  name="lastname" type="text" id="lname" class="text_field"></p>
+        <label for="position" >Position</label>
+          <p><select class="text_field" name="position" id="position" required="required">
+          <option value="">Please select</option>
+          <option id="manager"  value="manager">Manager</option>
+          <option id="employee" value="employee">Employee</option>
+        </select></p>
+        <label for="email">Email Address</label>
+        <p><input name="email" type="text" id="email" class="text_field"></p>
+        <label for="password">Password</label>
+        <p><input name="password" type="password" id="password" class="text_field"></p>
+        <label for="comfirmpw">Comfirm Password</label>
+        <p><input name="comfirmpw" type="password" id="comfirmpw" class="text_field"></p>
+        <!--            This is the register button           -->
+        <div id="register_control">
+          <p><input class="btn_register" type="submit"  value="Register"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--                        footer                     -->
+  <footer>
+  </footer>
+
+</body>
+</html>

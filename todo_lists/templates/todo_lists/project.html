@@ -1,0 +1,281 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-main-function-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<!-- add list button -->
+{% block todo %}
+
+	<div class="modal" id="todo_form">
+	  <div class="header">
+	    <div class="title">Add New List</div>
+	    <button id= "titleclosebtn" class="btn close-modal">&times;</button>
+	  </div>
+	  <div class="body">
+	    <input type="text" id="todo_input1" placeholder="Write a new task name" required/>
+	    <input type="text" id="todo_input2" placeholder="Write the task description"/>
+	    <input type="submit" value="Add" id="todo_submit" />
+	  </div>
+	</div>
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-to-do-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<!-- todo list -->
+
+{% load static %}
+
+  <!-- <div id="progress_container">
+
+  </div> -->
+  <!-- <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" > -->
+
+
+
+          
+        <!-- <h2 class="pb-2 border-bottom" style="text-align: center; float: t;">Projects
+          <a href="{% url 'todo_lists:new_project'%}" class="btn btn-outline-warning btn btn-primary" style="float:right;color: white;">Add new project      <img src="{% static '../static/img/addd.png'%}" alt="addpic" width="25" height="25"></a>
+        </h2> -->
+      
+  <section class="inline"  style="display: table; ">
+    <div class="toplist">
+      <div id="addDiv">
+        To-do list        
+        <a href="{% url 'todo_lists:new_todo' project.id %}" class="add_task" style="float: right;">
+
+          <img src="{% static '../static/img/addd.png'%}"  alt="add_task_pic" width="25" height="25"></a>
+      </div>       
+    </div>
+    
+    <div class="innerbox">
+      {% for todo in todos %}
+      <div class="inner" draggable="true" style="display: table-row-group;">
+        <div class="row">              
+          <div >
+            <a href="{% url 'todo_lists:edit_todo' todo.id %}" style="float: right;" >
+              <img src="{% static '../static/img/edit.png'%}"  alt="editpic" width="12" height="15"></a>
+
+            <a href="{% url 'todo_lists:delete_todo' todo.id %}" style="float: right;">
+              <img src="{% static '../static/img/delete_project.png'%}"  alt="deletepic" width="12" height="15"></a>
+              
+            <p class="h3">Task Name:<span class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.name }}</sp></p>    
+          </div>
+          <p  class="h3">Details:          <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.details }}</span>
+          </p>            
+          <p  class="h3">Due Date:          <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.due_date }}</span>
+          </p>
+          <p  class="h3">Team Member:          <span   class="h3" style="font-family: Yanone Kaffeesatz">{{ todo.team.name }}</span>
+          </p>
+          <form method="post" action="{% url 'todo_lists:todoprogress' todo.pk %}" style="display: table-row;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn btn-outline-success btn-sm" style="float: right;">Doing</button>
+          </form>
+        </div>
+
+      </div> 
+      {% empty %}
+      <li>                                           </li>
+    {% endfor %} 
+    </div>            
+  </section>
+
+  <section class="inline"  style="display: table;">
+    <div class="toplist" >
+      <div id="addDiv">
+        In progress   
+        <span id="progress_button" >
+          <a href="{% url 'todo_lists:visualisation' project.id %}" class="btn btn-warning btn-block view_progress2" >Click Here to View Project {{ project.project_code }}'s Progress</a>
+        </span>    
+        <!-- <a href="{% url 'todo_lists:new_todo' project.id %}" class="add_task" style="float: right;">
+
+          <img src="{% static '../static/img/addd.png'%}"  alt="add_task_pic" width="25" height="25"></a> -->
+      </div>       
+    </div>
+    
+    <div class="innerbox">
+      {% for progress in progresses %}
+      <div class="inner" draggable="true"  style="display: table-row-group;">
+        <div class="row">              
+          <div >
+            <a href="{% url 'todo_lists:edit_todo' progress.pk %}" style="float: right;">
+              <img src="{% static '../static/img/edit.png'%}"  alt="editpic" width="12" height="15"></a>
+
+            <a href="{% url 'todo_lists:delete_todo' progress.pk %}" style="float: right;">
+              <img src="{% static '../static/img/delete_project.png'%}"  alt="deletepic" width="12" height="15"></a>
+              
+            <p class="h3">Task Name:            <span class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.name }}</span>
+            </p>    
+          </div>
+          <p  class="h3">Details:<span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.details }}</span></p>            
+          
+          <p  class="h3">Due Date:          <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.due_date }}</span>
+          </p>
+          <p  class="h3">Team Member:          <span   class="h3" style="font-family: Yanone Kaffeesatz">{{ progress.team.name }}</span>
+          </p>
+          <form method="post" action="{% url 'todo_lists:todoprogress' progress.pk %}" style="display: table-row;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn btn-outline-success btn-sm" style="float: right;">Done</button>
+          </form>
+        </div>
+
+      </div> 
+      {% empty %}
+      <li>                                      </li>
+    {% endfor %} 
+    </div>            
+  </section>
+
+  <section class="inline"  style="display: table; overflow: auto;">
+    <div class="toplist">
+      <div id="addDiv">
+        Done      
+        <!-- <a href="{% url 'todo_lists:new_todo' project.id %}" class="add_task" style="float: right;">
+  
+          <img src="{% static '../static/img/addd.png'%}"  alt="add_task_pic" width="25" height="25"></a> -->
+      </div>       
+    </div>
+    <div class="innerbox">
+ 
+      {% for done in dones %}
+      <div class="inner" draggable="true"  style="display: table-row-group;">
+ 
+        <div class="row">              
+          <div >
+            <a href="{% url 'todo_lists:edit_todo' done.pk %}" style="float: right;">
+              <img src="{% static '../static/img/edit.png'%}"  alt="editpic" width="12" height="15"></a>
+  
+            <a href="{% url 'todo_lists:delete_todo' done.pk %}" style="float: right;">
+              <img src="{% static '../static/img/delete_project.png'%}"  alt="deletepic" width="12" height="15"></a>
+              
+            <p class="h3">Task Name:            <span class="h3" style="font-family: Yanone Kaffeesatz">{{ done.name }}</span>
+            </p>    
+            <p  class="h3">Details:            <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.details }}</span>
+            </p>            
+            <p  class="h3">Due Date:            <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.due_date }}</span>
+            </p>
+            <p  class="h3">Team Member:            <span  class="h3" style="font-family: Yanone Kaffeesatz">{{ done.team.name }}</span>
+            </p>
+          </div>
+
+  
+        </div>
+        
+ 
+      </div> 
+      {% empty %}
+        <li>No task has been done.</li>
+      {% endfor %}
+    </div>            
+  </section>    
+ <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-in-progress-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
+      
+      <!-- <section class="inline">
+        <div class="toplist">
+          <div>In progress</div>
+        </div>
+        <div class="innerbox">
+          {% for progress in progresses %}
+          <div class="inner" draggable="true">
+            <div class="row">
+              <div class="col-sm">
+                <p>Task:</p>
+              </div>
+              <div class="col-sm">
+                <p style="font-family: Yanone Kaffeesatz">{{ progress.name }}</p>
+              </div>
+              <div class="col-sm">
+                <p><a href="{% url 'todo_lists:delete_todo' progress.pk %}">
+                  <img src="{% static '../static/img/delete.png'%}"  alt="deletepic" width="12" height="15"></a></p>
+              </div>
+            </div>
+            
+                <p>Details:</p>
+              
+            
+                <p style="font-family: Yanone Kaffeesatz">{{ progress.details }}</p>
+                <p>Due:{{ todo_due_date }}</p>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                    <p><a href="{% url 'todo_lists:edit_todo' progress.pk %}"><img src="{% static '../static/img/edit2.png'%}"  alt="editpic" width="12" height="15"></a></p>
+                  </div>
+                  <div class="col-sm">
+                  
+                </div>
+                  <div class="col-sm">
+                    <form method="post" action="{% url 'todo_lists:todoprogress' progress.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-success btn-sm">Done</button>
+                    </form>
+                  </div>
+                  <div class="col-sm">
+                    <p class="teamname">{{ progress.team.name }}</p>
+                  </div>     
+                </div>
+            </div> 
+          </div>
+          {% empty %}
+            <li>No task is now in progress.</li>
+          {% endfor %}
+        </div>
+
+      </section> -->
+    
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-done-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+ 
+
+
+      <!-- <section class="inline">
+        <div class="toplist">
+          <div>Done</div>
+        </div>
+        <div class="innerbox">
+          {% for done in dones %}
+          <div class="inner" draggable="true">
+            <div class="row">
+              <div class="col-sm">
+                <p>Task:</p>
+              </div>
+              <div class="col-sm">
+                 <p style="font-family: Yanone Kaffeesatz">{{ done.name }}</p>
+              </div>
+              <div class="col-sm">
+                <p><a href="{% url 'todo_lists:delete_todo' done.pk %}">
+                  <img src="{% static '../static/img/delete.png'%}"  alt="deletepic" width="12" height="15"></a></p>
+              </div>
+            </div>
+            
+                <p>details:</p>
+              
+              
+                <p style="font-family: Yanone Kaffeesatz">{{ done.details }}</p>
+                <p>Due:{{ todo_due_date }}</p>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                    <p><a href="{% url 'todo_lists:edit_todo' done.pk %}"><img src="{% static '../static/img/edit2.png'%}"  alt="editpic" width="12" height="15"></a></p>
+                </div>
+                <div class="col-sm">
+                  
+                </div>
+                <div class="col-sm">
+                    
+                </div>
+                <div class="col-sm">
+                  <p class="teamname">{{ done.team.name }}</p>
+                </div>
+            </div>
+
+          </div>
+          
+        </div>
+          {% empty %}
+            <li>No task is has been done.</li>
+          {% endfor %}
+          
+        </div>
+      </section> -->
+
+  	{% block task %} {% endblock %}
+
+ <footer>
+ </footer>
+ <!-- <div id="overlay"></div> -->
+ {% endblock %}

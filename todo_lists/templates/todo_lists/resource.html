@@ -1,0 +1,149 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block resources %}
+<div class="container px-4 py-5 " id="hanging-icons"> 
+  <h2 class="pb-2 border-bottom" style="text-align: center;">Resources
+    <form style="float: right;" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" 
+    action="{% url 'todo_lists:searchref' %}" role="searcher" method="get">
+      <div class="input-group">
+          <input type="search" class="form-control bg-light border-0 small" placeholder="Search for..." 
+          aria-label="Search" aria-describedby="basic-addon2" name="q">
+          <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-search fa-sm"></i>
+              </button>
+          </div>
+      </div>
+  </form>
+  </h2>
+
+  
+  <div id="error_msg">
+    {% if error_msg %}
+       <p>{{error_msg}}</p>
+       {% endif %}
+       {% for resource in resource_list %}
+
+       {% empty %}
+            <div class="no-post"> <h3>File Not found! </h3></div>
+      {% endfor %}
+  </div>
+
+
+<div class="row g-4 py-5 row-cols-1 row" >
+
+  <div class="card card-cover overflow-hidden text-white bg-white rounded-5 shadow-lg col-lg-14" style="margin-left: 30px; height: 600px; padding: 20px;">
+<!--     
+      <div class="row" style="color: black;">
+      </div>
+      <br>
+      <br> -->
+      <div class="row">
+        <div class="col-lg-4" style="color: black;">
+          <p>Templete. </p>
+
+          <p> 
+            <a href="http://127.0.0.1:8000/todo_lists/readresource1" style="padding:0; margin: 5px; height: 50px; color: #000;" class="alert alert-primary resources_link" style="padding:0; height: 50px;" role="alert">Click here to read.</a> <a href="http://127.0.0.1:8000/todo_lists/resource1" style="padding:0; margin: 5px; height: 50px; color: #000;" class="alert alert-primary resources_link" role="alert">Click here to download</a>
+          </p>
+        <!-- </div>
+
+        <div class="col-lg-3" style="color: black;"> -->
+          <p>Static.</p>
+
+          <p>
+            <a href="http://127.0.0.1:8000/todo_lists/readresource2" class="alert alert-primary resources_link "  style="padding:0; margin: 5px; height: 50px; color: #000;" role="alert" role="alert">Click here to read.</a> <a href="http://127.0.0.1:8000/todo_lists/resource2" class="alert alert-primary resources_link" style="padding:0; margin: 5px; height: 50px; color: #000;" role="alert">Click here to download</a>
+          </p>
+        <!-- </div>
+
+        <div class="col-lg-3" style="color: black;"> -->
+          
+          <p>Data.</p>
+
+          <p>
+            <a href="http://127.0.0.1:8000/todo_lists/readresource3" style="padding:0; margin: 5px; height: 50px; color: #000;" class="alert alert-primary resources_link" style="padding:0; height: 50px;" role="alert">Click here to read.</a> <a href="http://127.0.0.1:8000/todo_lists/resource3" class="alert alert-primary resources_link" style="padding:0; margin: 5px; height: 50px; color: #000;" role="alert">Click here to download</a>
+          </p>
+        <!-- </div>
+        <div class="col-lg-3" style="color: black;"> -->
+          <p>Project brief.</p>
+
+          <p>
+            <a href="http://127.0.0.1:8000/todo_lists/readresource4" style="padding:0; margin: 5px; height: 50px; color: #000;" class="alert alert-primary resources_link" style="padding:0; height: 50px;" role="alert">Click here to read.</a> <a href="http://127.0.0.1:8000/todo_lists/resource4" class="alert alert-primary resources_link" style="padding:0; margin: 5px; height: 50px; color: #000;" role="alert">Click here to download</a>
+          </p>
+        </div>
+
+      
+
+        <div class="col-lg-4" style="color: black;">
+          <h2>Read Resource</h2>
+          <br>
+          <br>
+          <ul>
+            {% for resource in resource_list %}
+            <li>
+              <a href="checkresource{{resource.id}}" class="alert-info resources_link"> {{resource.resource}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-lg-4" style="color: black;">
+          <h2>Download Resource</h2>
+          <br>
+          <br>
+          <ul>
+            {% for resource in resource_list %}
+            <li>
+              <a href="downloadresource{{resource.id}}" class="alert-info resources_link"> {{resource.resource}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    
+   
+  <br>
+  
+
+</div>
+
+<div class="card card-cover overflow-hidden text-white bg-white rounded-5 shadow-lg col-lg-14" style="margin-left: 30px; height: 200px; padding: 20px;">
+  <div class="row">
+    <h2 class="col-lg-6" style="color: black; vertical-align: middle;">Upload new resource</h2>
+    <form class="col-lg-4 " action="{% url 'todo_lists:upload' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <p>Upload file
+        <!-- <input type="file" name="myfiles" multiple="" id="uploadfile" class="btn btn-primary  -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button">Files should be less than 100MB</button>
+     
+          </div>
+        </div>
+        </p>
+        <p>
+          <input type="file" name="myfiles" multiple="" id="uploadfile" placeholder="" aria-label="" aria-describedby="basic-addon1">
+
+          {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+        </p>
+      </div>
+      <input type="submit" value="Upload" id="uploadbutton" class="btn btn-primary btn-sm">
+
+    </form>
+  </div>
+</div>
+
+
+</div>
+
+{% endblock %}
+
+
+
+        

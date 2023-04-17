@@ -1,0 +1,206 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+{% load static %}
+{% block visualisation %}
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+crossorigin="anonymous"> -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-gantt-chart-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<div class="container px-4 py-5 " id="hanging-icons">
+  <script type="text/javascript">
+      google.charts.load('current', {'packages':['gantt']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task name');
+          data.addColumn('string', 'team member');
+          data.addColumn('string', 'project name');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          var dataList = [
+
+              {% for todo in todos %}
+                  ['{{ todo.name }}', '{{ todo.team.name }}', '{{ todo.project }}',
+                  new Date({{todo.start_date|date:"Y, m, d"}}), new Date({{todo.due_date|date:"Y, m, d"}}), null, 0, null]{% if not forloop.last %},{% endif %}
+              {% endfor %}
+
+          ];
+          data.addRows(dataList);
+
+          var options = {
+              height: 400,
+              width: 1000,
+              gantt: {
+                trackHeight: 40
+              }
+
+
+          };
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+          chart.draw(data, options);
+
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+
+          function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['Task', 'Percentage'],
+              ['To-do',     5],
+              ['Progress',      7],
+              ['Done',   6]
+          ]);
+
+          var options = {
+            title: '#2021 TEP Project',
+            pieHole: 0.3,
+            chartArea:{left:100,top:50,width:'100%',height:'100%'},
+            fontSize: 15
+
+          };
+          var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+          chart.draw(data, options);
+          }
+      }
+  </script>
+
+<h2 class="pb-2 border-bottom" style="text-align: center;">Progress Visualisation
+  <!-- <a href="{% url 'todo_lists:new_project'%}" class="btn btn-outline-warning btn btn-primary" style="float:right;color: white;">Add new project      <img src="{% static '../static/img/addd.png'%}" alt="addpic" width="25" height="25"></a> -->
+</h2>
+
+ <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-doughnut- chart-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+<div class= "container">
+    <div class="row">
+        <div class="item2 col-sm item">
+            <h3>Project performance</h3>
+            <canvas id="myChart" width="600" height="300"></canvas>
+            <div class="chart-wrapper">
+             {% block scripts %}
+                <script>
+                $(document).ready(function() {
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [{% for label in counts_data %} '{{ label }}',{% endfor %}],
+                        datasets: [{
+                            label: '# of Task',
+
+                            data: [{% for label, value in counts_data.items %} {{ value }}, {% endfor %}],
+
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive:false
+
+                    }
+                });
+                });
+                </script>
+                {% endblock %}
+            </div>
+        </div>
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-team-member-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <div class="item3 col-sm item">
+              <h3>Team</h3>
+              <div class="row bootstrap snippets bootdeys">
+                    <div class="panel panel-info panel-widget">
+                        <div class="panel-body">
+                          <ul class="basic-list image-list">
+                          {% for team in team %}
+                          <li><img src="{% static '../static/img/avatar.png'%}"  alt="deletepic" width="25" height="25"><b>{{ team.name }}</b><span class="desc h4">{{ team.position }}</span></li>
+                          {% empty %}
+                          <li>No team member yet.</li>
+                          {% endfor %}
+                        
+                          </ul>
+                        </div>
+                    </div>
+              </div>
+            </div>
+        
+    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-Calendar-Chart-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    <div class="row">
+        <div class="item4 col-sm">
+          <h4>Project Road Map</h4>
+          <div class= "chart_div" id= "chart_div" style="width: 100%; height: 400px;">
+
+          </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm item">
+        <h4>Project Calendar</h4>
+        <div class= "chart_div" id= "chart_div2" style="width: 100%; height: 400px;">
+          <script type="text/javascript">
+                google.charts.load("current", {packages:["calendar"]});
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    var dataTable = new google.visualization.DataTable();
+                    dataTable.addColumn({ type: 'date', id: 'Date' });
+                    dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+                    dataTable.addRows([
+                    {% for todo in todos %}
+                      [ new Date({{ todo.due_date|date:"Y, m-1, d"}}), {{ todo.priority_level }} ]{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                    ]);
+
+                    var chart = new google.visualization.Calendar(document.getElementById('chart_div2'));
+
+                    var options = {
+                        title: "Task Due Date",
+                        height: 350,
+
+                        calendar: {
+                          monthLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 12,
+                            color: '#013445',
+                            bold: true,
+                            italic: true
+                          },
+                          monthOutlineColor: {
+                            stroke: '#981b48',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 2
+                          },
+                          unusedMonthOutlineColor: {
+                            stroke: '#f16148',
+                            strokeOpacity: 0.8,
+                            strokeWidth: 1
+                          },
+                          underMonthSpace: 16,
+                        }
+
+
+                    };
+
+                    chart.draw(dataTable, options);
+                }
+          </script>
+        </div>
+      </div>
+    </div>
+
+</div>
+{% endblock %}

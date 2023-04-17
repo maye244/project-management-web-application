@@ -1,0 +1,33 @@
+<!doctype html>
+{% extends "todo_lists/base.html" %}
+
+{% block new-todo %}
+<div class="card form_distance" style="width: 40rem; height: 800px; margin: 50px 30%;">
+	<div class="card-body">
+	<p class="card-title"><a href="{% url 'todo_lists:project' project.id %}">Project: {{ project }}</a></p>
+	
+	
+	<p class="card-title">Add a new to-do task:</p>
+
+	<form action="{% url 'todo_lists:new_todo' project.id %}" method="post" class="mb-3" >
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button name="submit" class="btn btn-primary">Add a task</button>
+	</form>
+	<br>
+		<!-- <p style="color: #d0503d; font-family: hind;"><strong>Hints:</strong> Due to the maintainance, we may unable to display team member's name correctly, please refer to the sequence of below list to choose a team member to do the task.</p>
+		{% for team in team %}
+				<p style="color: #d0503d; font-family: monospace;">{{ team }}</p>
+		{% endfor %} -->
+</div>
+</div>	
+
+{% endblock %}
+<!-- <div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> -->
