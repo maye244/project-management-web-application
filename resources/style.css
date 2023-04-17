@@ -1,0 +1,93 @@
+/*
+filename: lab03;
+author: Lucas Qin;
+created: 19/08/2021;
+last modified: 19/08/2021;
+description: lab03.html;
+*/
+
+* {
+	font-family: calabri, sans-serif;
+	color: #2f4f4f;
+}
+
+body {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+nav a {
+	text-decoration: none;
+	padding: 0.2em 0.6em;
+	border: 4px solid black;
+	border-color: #c2c5c6;
+}
+
+a:hover {
+	background-color: lightblue;
+	border-color: darkblue;
+}
+aside:hover {
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+aside, footer {
+	font-family: italic;
+}
+
+h2 {
+	color: rgb(0, 128, 128);
+}
+
+h1,h2,h3 {
+	font-family: arial, sans-serif;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+h1 {
+	color: #77157b;
+	margin-bottom: 30px;
+}
+
+#heading {
+	color: #ff0000;
+}
+ 
+
+ul {
+	list-style-type: square;
+}
+
+
+table,tr,th,td {
+	border: 1px solid black;
+	margin-bottom: 25px;
+}
+
+caption {
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.rowKey {
+	text-align: right;
+}
+ 
+ #images {
+ 	text-align: center;
+ }
+
+ .special {
+ 	color: darkorange;
+ 	font-weight: bold;
+ }
+
+ p {
+ 	margin-top: 10px;
+ 	margin-bottom: 15px;
+ }
+

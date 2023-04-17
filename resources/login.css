@@ -1,0 +1,69 @@
+#login_frame{
+  width: 480px;
+  height: 460px;
+  padding: 13px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
+  background-color: #f9f0f0;
+  border-radius: 10px;
+  text-align: center;
+}
+form p > *{
+  display: inline-block;
+  vertical-align: middle;
+}
+.loginframebox{
+  width:80%;
+  height: 80%;
+  padding: 50px;
+}
+.loginframebox p{
+  font-size: 20px;
+  padding: 20px;
+}
+.loginframebox form p{
+  padding: 3px;
+
+}
+/*
+.label_input{
+  font-size: 14px;
+  width: 100px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  color: white;
+  background-color: grey;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+}
+*/
+.text_field{
+  width: 300px;
+  height: 55px;
+  border-radius: 5px;
+  border: 0;
+  border: 1px solid black;
+  padding: 0px 15px;
+  font-size: 20px;
+}
+
+#btn_login{
+  font-size: 18px;
+  width: 330px;
+  height: 55px;
+  line-height: 28px;
+  text-align: center;
+  color: white;
+  background-color: black;
+  border-radius: 6px;
+  border: 0;
+  float: left;
+}
+#login_control{
+  padding: 0 28px;
+}
